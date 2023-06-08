@@ -28,6 +28,7 @@ func ReadConfigFile(path string) []string {
 }
 
 func ParseConfig(config []string) {
+	var HttpConfiguration utils.Http
 	var ParsedConfig []string
 	//get work area
 	for i := 0; i < len(config); i++ {
@@ -44,4 +45,8 @@ func ParseConfig(config []string) {
 		}
 	}
 
+	//get http
+	for i := 0; i < len(ParsedConfig); i++ {
+
+	}
 }
