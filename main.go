@@ -27,8 +27,7 @@ func ReadConfigFile(path string) []string {
 	return lines
 }
 
-func ParseConfig(config []string) {
-	var HttpConfiguration utils.Http
+func ParseConfig(config []string) (HttpConfiguration utils.Http) {
 	var ParsedConfig []string
 	//get work area
 	for i := 0; i < len(config); i++ {
@@ -45,8 +44,22 @@ func ParseConfig(config []string) {
 		}
 	}
 
-	//get http
+	//get config
 	for i := 0; i < len(ParsedConfig); i++ {
-
+		if strings.Contains(config[i], "port")
 	}
+}
+
+func ConfigGetValue(line string) string {
+	var value string
+	var isValue = false
+	for i := 0; i < len(line); i++ {
+		if isValue {
+			value += line[i]
+		}
+		if line[i] == '"' {
+			isValue = !isValue
+		}
+	}
+	return value[:-1]
 }
