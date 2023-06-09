@@ -22,7 +22,7 @@ func ReadConfigFile(path string) []string {
 	return lines
 }
 
-func ParseConfig(config []string) /* (HttpConfiguration utils.Http)*/ {
+func ParseConfig(config []string) (HttpConfiguration utils.Http) {
 	var ParsedConfig []string
 	//get work area
 	for i := 0; i < len(config); i++ {
@@ -41,9 +41,37 @@ func ParseConfig(config []string) /* (HttpConfiguration utils.Http)*/ {
 
 	//get config
 	for i := 0; i < len(ParsedConfig); i++ {
-		if strings.Contains(config[i], "port") {
+		if strings.Contains(ParsedConfig[i], "port") {
+			HttpConfiguration.Port = ConfigGetValue(ParsedConfig[i])
+		} else if strings.Contains(ParsedConfig[i], "log") {
+			HttpConfiguration.LogFolder = ConfigGetValue(ParsedConfig[i])
+		} else if strings.Contains(ParsedConfig[i], "location") {
+
 		}
 	}
+	return HttpConfiguration
+}
+
+func ConfigParseLocation(config []string, start int) {
+
+}
+
+func GetLocationPath(config string) string {
+	var path string
+	var isValue = false
+	for i := 0; i < len(config); i++ {
+		val := string(config[i])
+		if val == "(" {
+			isValue = !isValue
+			continue
+		} else if val == ")" {
+			break
+		}
+		if isValue {
+			path += string(val)
+		}
+	}
+	return path
 }
 
 func ConfigGetValue(line string) string {
@@ -56,6 +84,10 @@ func ConfigGetValue(line string) string {
 		if line[i] == '"' {
 			isValue = !isValue
 		}
+	}
+	if len(value)-1 <= 0 {
+		utils.PrintError("Error while parcing config: no value is specified")
+		return ""
 	}
 	return value[:len(value)-1]
 }

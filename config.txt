@@ -12,8 +12,8 @@ http {
         path: https://127.0.0.1:6969/
     }
 
-    location_load(/forum) {
-        type: "proxy";
+    location(/forum) {
+        type: "proxy_load";
         path: ["https://0.0.0.0:1/", "https://0.0.0.1:1/", "https://0.0.0.2:1/"]
     }
 }
