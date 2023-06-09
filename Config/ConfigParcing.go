@@ -53,7 +53,17 @@ func ParseConfig(config []string) (HttpConfiguration utils.Http) {
 }
 
 func ConfigParseLocation(config []string, start int) {
-
+	var location utils.UndefinedLocation
+	location.Path = GetLocationPath(config[start])
+	for i := start + 1; i < len(config); i++ {
+		if strings.Contains(config[i], "}") {
+			break
+		} else if strings.Contains(config[i], "type") {
+			location.Utype = ConfigGetValue(config[i])
+		} else if strings.Contains(config[i], "path") {
+			location.Path = ConfigGetValue(config[i])
+		}
+	}
 }
 
 func GetLocationPath(config string) string {

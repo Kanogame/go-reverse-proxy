@@ -5,6 +5,12 @@ type Http struct {
 	LogFolder string
 }
 
+type UndefinedLocation struct {
+	WebPath string
+	Utype   string
+	Path    string
+}
+
 type StaticLocations struct {
 	WebPath  string
 	FilePath string
