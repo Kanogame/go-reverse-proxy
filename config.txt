@@ -1,19 +1,18 @@
 http {
-    port: "80";
-    log: "./latest.log";
-    
-    location(/) {
-        type: "static";
-        path: "./static";
-    }
-    
-    location(/app) {
-        type: "proxy";
-        path: https://127.0.0.1:6969/
-    }
+	port: "80"; 
+	log: "./latest.log"; 
+	location(/) { 
+		type: "static"; 
+		path: "./static"; 
+	} 
 
-    location(/forum) {
-        type: "proxy_load";
-        path: ["https://0.0.0.0:1/", "https://0.0.0.1:1/", "https://0.0.0.2:1/"]
-    }
+	location(/app) { 
+		type: "proxy";
+		path: "https://127.0.0.1:6969/";
+	} 
+    
+	location(/app) { 
+	type: "proxy_load"; 
+	path: ["https://0.0.0.0:1/", "https://0.0.0.1:1/", "https://0.0.0.2:1/"];
+	} 
 }

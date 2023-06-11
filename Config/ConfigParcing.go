@@ -22,7 +22,7 @@ func ReadConfigFile(path string) []string {
 	return lines
 }
 
-func ParseConfig(config []string) (HttpConfiguration utils.Http) {
+func ParseConfig(config []string) (HttpConfiguration utils.Http, locationArray []utils.UndefinedLocation) {
 	var ParsedConfig []string
 	//get work area
 	for i := 0; i < len(config); i++ {
@@ -34,7 +34,7 @@ func ParseConfig(config []string) (HttpConfiguration utils.Http) {
 					break
 				}
 			}
-			ParsedConfig = config[i+1 : end-1]
+			ParsedConfig = config[i+1 : end]
 			break
 		}
 	}
@@ -46,10 +46,10 @@ func ParseConfig(config []string) (HttpConfiguration utils.Http) {
 		} else if strings.Contains(ParsedConfig[i], "log") {
 			HttpConfiguration.LogFolder = ConfigGetValue(ParsedConfig[i])
 		} else if strings.Contains(ParsedConfig[i], "location") {
-
+			locationArray = append(locationArray, ConfigParseLocation(ParsedConfig, i))
 		}
 	}
-	return HttpConfiguration
+	return HttpConfiguration, locationArray
 }
 
 func ConfigParseLocation(config []string, start int) utils.UndefinedLocation {
