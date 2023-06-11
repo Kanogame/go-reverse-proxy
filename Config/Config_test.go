@@ -91,7 +91,7 @@ func TestSepatateEndPoints(t *testing.T) {
 		input string
 		want  []string
 	}{
-		{"test 1", `https://0.0.0.0:1"https://0.0.0.0:1`, []string{"https://0.0.0.0:1", "https://0.0.0.0:1"}},
+		{"test 1", `https://0.0.0.1:1"https://0.0.0.0:1`, []string{"https://0.0.0.1:1", "https://0.0.0.0:1"}},
 	}
 
 	for _, tt := range tests {
@@ -99,9 +99,13 @@ func TestSepatateEndPoints(t *testing.T) {
 			ans := separateEndPoints(tt.input)
 			for i, val := range ans {
 				if val != tt.want[i] {
-					t.Errorf("got %s, want %s", val, tt.want[i])
+					t.Errorf("got %s, want %s", ans, tt.want[i])
 				}
 			}
 		})
 	}
 }
+
+/*func TestDefineServer(t *testing.T) {
+	t.Log()
+}*/

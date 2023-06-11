@@ -4,6 +4,6 @@ import config "main/Config"
 
 func main() {
 	configFile := config.ReadConfigFile("./config.txt")
-	HttpArgs, UndefinedServers := config.ParseConfig(configFile)
-
+	_, UndefinedServers := config.ParseConfig(configFile)
+	config.DefineServers(UndefinedServers)
 }

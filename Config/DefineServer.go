@@ -1,6 +1,9 @@
 package config
 
-import utils "main/Utils"
+import (
+	"fmt"
+	utils "main/Utils"
+)
 
 func DefineServers(servers []utils.UndefinedLocation) (static []utils.StaticLocations, proxy []utils.ProxyLocations, load []utils.LoadLocations) {
 	for _, server := range servers {
@@ -9,7 +12,7 @@ func DefineServers(servers []utils.UndefinedLocation) (static []utils.StaticLoca
 		} else if server.Utype == "proxy" {
 			proxy = append(proxy, utils.ProxyLocations{WebPath: server.WebPath, EndPoint: server.Path})
 		} else if server.Utype == "proxy_load" {
-			endPoints := separateEndPoints(server.WebPath)
+			endPoints := separateEndPoints(server.Path)
 			ServerEndPoints := make(map[string]int)
 			for _, endPoint := range endPoints {
 				ServerEndPoints[endPoint] = 0
@@ -25,11 +28,13 @@ func separateEndPoints(endPoints string) []string {
 	var current string
 	for i := 0; i < len(endPoints); i++ {
 		if string(endPoints[i]) == `"` {
-			current = ""
 			endPointsArr = append(endPointsArr, current)
+			current = ""
 			continue
 		}
+		fmt.Println(string(endPoints[i]))
 		current += string(endPoints[i])
 	}
+	endPointsArr = append(endPointsArr, current)
 	return endPointsArr
 }
