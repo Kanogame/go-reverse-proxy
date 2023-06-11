@@ -28,7 +28,7 @@ func TestGetValue(t *testing.T) {
 }
 
 func TestGetLocation(t *testing.T) {
-	t.Log("Testing GetValue")
+	t.Log("Testing Location")
 
 	var tests = []struct {
 		name  string
@@ -50,7 +50,7 @@ func TestGetLocation(t *testing.T) {
 }
 
 func TestParseLocation(t *testing.T) {
-	t.Log("Testing GetValue")
+	t.Log("Testing ParsingLocation")
 
 	var tests = []struct {
 		name   string
@@ -69,4 +69,16 @@ func TestParseLocation(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestParseConfig(t *testing.T) {
+	want1 := utils.Http{LogFolder: "./latest.log", Port: "80"}
+	want2 := []utils.UndefinedLocation{utils.UndefinedLocation{Utype: "static", Path: "./static", WebPath: "/"}}
+	t.Log("Testing ParcingConfig")
+	t.Run("test", func(t *testing.T) {
+		ans1, ans2 := ParseConfig([]string{"http {", `port: "80";`, `port: "./latest.log";`, "location(/) {", `type: "static";`, `path: "./static";`, "}", "}"})
+		if ans1 != want1 && ans2[0] != want2[0] {
+			t.Errorf("got %s, want %s", ans1, ans2)
+		}
+	})
 }
