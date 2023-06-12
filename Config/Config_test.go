@@ -106,6 +106,42 @@ func TestSepatateEndPoints(t *testing.T) {
 	}
 }
 
-/*func TestDefineServer(t *testing.T) {
-	t.Log()
-}*/
+func TestDefineServer(t *testing.T) {
+	t.Log("Testing DefineServer")
+
+	var tests = []struct {
+		name  string
+		input []utils.UndefinedLocation
+		want1 []utils.StaticLocations
+		want2 []utils.ProxyLocations
+		want3 []utils.LoadLocations
+	}{
+		{"test 1",
+			[]utils.UndefinedLocation{utils.UndefinedLocation{Utype: "proxy", WebPath: "/", Path: "https://0.0.0.0:1"}},
+			nil,
+			[]utils.ProxyLocations{utils.ProxyLocations{WebPath: "/", EndPoint: "https://0.0.0.0:1"}},
+			nil,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			ans1, ans2, _ := DefineServers(tt.input)
+			for i, val := range ans1 {
+				if val != tt.want1[i] {
+					t.Errorf("got %s, want %s", ans1, tt.want1[i])
+				}
+			}
+			for i, val := range ans2 {
+				if val != tt.want2[i] {
+					t.Errorf("got %s, want %s", ans2, tt.want2[i])
+				}
+			}
+			/*for i, val := range ans3 {
+				if val != tt.want3[i] {
+					t.Errorf("got %s, want %s", ans3, tt.want3[i])
+				}
+			}*/
+		})
+	}
+}
