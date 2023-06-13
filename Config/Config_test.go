@@ -117,9 +117,9 @@ func TestDefineServer(t *testing.T) {
 		want3 []utils.LoadLocations
 	}{
 		{"test 1",
-			[]utils.UndefinedLocation{utils.UndefinedLocation{Utype: "proxy", WebPath: "/", Path: "https://0.0.0.0:1"}},
+			[]utils.UndefinedLocation{{Utype: "proxy", WebPath: "/", Path: "https://0.0.0.0:1"}},
 			nil,
-			[]utils.ProxyLocations{utils.ProxyLocations{WebPath: "/", EndPoint: "https://0.0.0.0:1"}},
+			[]utils.ProxyLocations{{WebPath: "/", EndPoint: "https://0.0.0.0:1"}},
 			nil,
 		},
 	}
