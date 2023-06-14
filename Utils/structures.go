@@ -27,7 +27,7 @@ type LoadLocations struct {
 }
 
 type Locations struct {
-	static []StaticLocations
-	proxy  []ProxyLocations
-	load   []LoadLocations
+	Static *[]StaticLocations
+	Proxy  *[]ProxyLocations
+	Load   *[]LoadLocations
 }
