@@ -12,13 +12,13 @@ type StaticLocations struct {
 
 func StartHttpServer(port string, locations *utils.Locations) {
 	locationHandler(locations)
-	http.ListenAndServe(":"+port, nil)
 	fmt.Println("Http Server Started and listening at: ", port)
+	http.ListenAndServe(":"+port, nil)
 }
 
 func locationHandler(locations *utils.Locations) {
 	for _, staticServer := range *locations.Static {
 		r := &StaticLocations{&staticServer}
-		http.HandleFunc(staticServer.WebPath, r.HandleStatic())
+		go http.HandleFunc(staticServer.WebPath, r.HandleStatic())
 	}
 }

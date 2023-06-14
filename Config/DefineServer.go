@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	utils "main/Utils"
 )
 
@@ -32,7 +31,6 @@ func separateEndPoints(endPoints string) []string {
 			current = ""
 			continue
 		}
-		fmt.Println(string(endPoints[i]))
 		current += string(endPoints[i])
 	}
 	endPointsArr = append(endPointsArr, current)
