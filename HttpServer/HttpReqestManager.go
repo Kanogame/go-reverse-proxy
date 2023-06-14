@@ -18,6 +18,7 @@ func StartHttpServer(port string, locations *utils.Locations) {
 
 func locationHandler(locations *utils.Locations) {
 	for _, staticServer := range *locations.Static {
-		http.HandleFunc(staticServer.WebPath)
+		r := &StaticLocations{&staticServer}
+		http.HandleFunc(staticServer.WebPath, r.HandleStatic())
 	}
 }
