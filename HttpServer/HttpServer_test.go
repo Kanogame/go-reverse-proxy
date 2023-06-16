@@ -8,17 +8,19 @@ import (
 )
 
 func TestHandleStatic(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "http://127.0.0.1:80/", nil)
+	req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
 	w := httptest.NewRecorder()
-	test := &[]StaticLocations{
+	test := &StaticLocations{
 		&utils.StaticLocations{
 			WebPath:  "/",
 			FilePath: "./static/"},
 	}
 
-	http.HandleFunc(test.WebPath, test.HandleStatic())
+	handler := http.HandlerFunc(test.HandleStatic())
+	handler(w, req)
 
-	if want, got := http.StatusOK, w.Result().StatusCode; want != got {
-		t.Fatalf("expected a %d, instead got: %d", want, got)
+	if w.Result().StatusCode != http.StatusOK {
+		t.Error(w.Result())
+		t.Errorf("expected a %d, instead got: %d", http.StatusOK, w.Result().StatusCode)
 	}
 }
