@@ -6,10 +6,6 @@ import (
 	"net/http"
 )
 
-type StaticLocations struct {
-	*utils.StaticLocations
-}
-
 func StartHttpServer(port string, locations *utils.Locations) {
 	locationHandler(locations)
 	fmt.Println("Http Server Started and listening at: ", port)
