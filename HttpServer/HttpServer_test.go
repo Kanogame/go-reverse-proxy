@@ -1,6 +1,7 @@
 package httpserver
 
 import (
+	"log"
 	utils "main/Utils"
 	"net/http"
 	"net/http/httptest"
@@ -8,19 +9,20 @@ import (
 )
 
 func TestHandleStatic(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/index.html", nil)
-	w := httptest.NewRecorder()
 	test := &StaticLocations{
 		&utils.StaticLocations{
 			WebPath:  "/",
-			FilePath: "./static/"},
+			FilePath: "../static/"},
 	}
 
-	handler := http.HandlerFunc(test.HandleStatic())
-	handler(w, req)
+	ts := httptest.NewServer(http.HandlerFunc(test.HandleStatic()))
+	defer ts.Close()
 
-	if w.Result().StatusCode != http.StatusOK {
-		t.Error(w.Result())
-		t.Errorf("expected a %d, instead got: %d", http.StatusOK, w.Result().StatusCode)
+	res, err := http.Get(ts.URL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	if res.StatusCode != 200 {
+		t.Errorf("expected 200 got %v", res.StatusCode)
 	}
 }
