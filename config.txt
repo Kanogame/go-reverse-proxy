@@ -6,9 +6,9 @@ http {
 		path: "./static"; 
 	} 
 
-	location(/app) { 
+	location(/app/) { 
 		type: "proxy";
-		path: "https://127.0.0.1:6969/";
+		path: "http://172.21.159.235:12312/";
 	} 
     
 	location(/app) { 
