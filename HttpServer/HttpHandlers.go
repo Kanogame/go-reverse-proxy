@@ -1,6 +1,7 @@
 package httpserver
 
 import (
+	"fmt"
 	utils "main/Utils"
 	"net/http"
 	"net/http/httputil"
@@ -27,10 +28,8 @@ func (Location *ProxyLocations) HandleProxy() http.HandlerFunc {
 
 		proxy := httputil.NewSingleHostReverseProxy(url)
 
-		r.URL.Host = url.Host
-		r.URL.Scheme = url.Scheme
+		fmt.Println(r.URL.Host)
 		r.Header.Set("X-Forwarded-Host", r.Header.Get("Host"))
-		r.Host = url.Host
 
 		proxy.ServeHTTP(w, r)
 	}
