@@ -11,7 +11,7 @@ func DefineServers(servers []utils.UndefinedLocation) (static []utils.StaticLoca
 		} else if server.Utype == "proxy" {
 			proxy = append(proxy, utils.ProxyLocations{WebPath: server.WebPath, EndPoint: server.Path})
 		} else if server.Utype == "proxy_load" {
-			endPoints := separateEndPoints(server.Path)
+			endPoints := SeparateEndPoints(server.Path)
 			ServerEndPoints := make(map[string]int)
 			for _, endPoint := range endPoints {
 				ServerEndPoints[endPoint] = 0
@@ -22,7 +22,7 @@ func DefineServers(servers []utils.UndefinedLocation) (static []utils.StaticLoca
 	return static, proxy, load
 }
 
-func separateEndPoints(endPoints string) []string {
+func SeparateEndPoints(endPoints string) []string {
 	var endPointsArr []string
 	var current string
 	for i := 0; i < len(endPoints); i++ {

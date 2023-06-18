@@ -1,7 +1,8 @@
-package httpserver
+package tests
 
 import (
 	"log"
+	httpserver "main/HttpServer"
 	utils "main/Utils"
 	"net/http"
 	"net/http/httptest"
@@ -9,8 +10,8 @@ import (
 )
 
 func TestHandleStatic(t *testing.T) {
-	test := &StaticLocations{
-		&utils.StaticLocations{
+	test := &httpserver.StaticLocations{
+		StaticLocations: &utils.StaticLocations{
 			WebPath:  "/",
 			FilePath: "../static/"},
 	}

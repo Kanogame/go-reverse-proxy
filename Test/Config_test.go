@@ -1,6 +1,7 @@
-package config
+package tests
 
 import (
+	config "main/Config"
 	utils "main/Utils"
 	"testing"
 )
@@ -19,7 +20,7 @@ func TestGetValue(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans := ConfigGetValue(tt.input)
+			ans := config.ConfigGetValue(tt.input)
 			if ans != tt.want {
 				t.Errorf("got %s, want %s", ans, tt.want)
 			}
@@ -41,7 +42,7 @@ func TestGetLocation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans := GetLocationPath(tt.input)
+			ans := config.GetLocationPath(tt.input)
 			if ans != tt.want {
 				t.Errorf("got %s, want %s", ans, tt.want)
 			}
@@ -63,7 +64,7 @@ func TestParseLocation(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans := ConfigParseLocation(tt.input1, tt.input2)
+			ans := config.ConfigParseLocation(tt.input1, tt.input2)
 			if ans != tt.want {
 				t.Errorf("got %s, want %s", ans, tt.want)
 			}
@@ -73,10 +74,10 @@ func TestParseLocation(t *testing.T) {
 
 func TestParseConfig(t *testing.T) {
 	want1 := utils.Http{LogFolder: "./latest.log", Port: "80"}
-	want2 := []utils.UndefinedLocation{utils.UndefinedLocation{Utype: "static", Path: "./static", WebPath: "/"}}
+	want2 := []utils.UndefinedLocation{{Utype: "static", Path: "./static", WebPath: "/"}}
 	t.Log("Testing ParcingConfig")
 	t.Run("test", func(t *testing.T) {
-		ans1, ans2 := ParseConfig([]string{"http {", `port: "80";`, `port: "./latest.log";`, "location(/) {", `type: "static";`, `path: "./static";`, "}", "}"})
+		ans1, ans2 := config.ParseConfig([]string{"http {", `port: "80";`, `port: "./latest.log";`, "location(/) {", `type: "static";`, `path: "./static";`, "}", "}"})
 		if ans1 != want1 && ans2[0] != want2[0] {
 			t.Errorf("got %s, want %s", ans1, ans2)
 		}
@@ -96,7 +97,7 @@ func TestSepatateEndPoints(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans := separateEndPoints(tt.input)
+			ans := config.SeparateEndPoints(tt.input)
 			for i, val := range ans {
 				if val != tt.want[i] {
 					t.Errorf("got %s, want %s", ans, tt.want[i])
@@ -126,7 +127,7 @@ func TestDefineServer(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			ans1, ans2, _ := DefineServers(tt.input)
+			ans1, ans2, _ := config.DefineServers(tt.input)
 			for i, val := range ans1 {
 				if val != tt.want1[i] {
 					t.Errorf("got %s, want %s", ans1, tt.want1[i])
