@@ -2,6 +2,7 @@ package config
 
 import (
 	utils "main/Utils"
+	"net/url"
 )
 
 func DefineServers(servers []utils.UndefinedLocation) (static []utils.StaticLocations, proxy []utils.ProxyLocations, load []utils.LoadLocations) {
@@ -12,9 +13,13 @@ func DefineServers(servers []utils.UndefinedLocation) (static []utils.StaticLoca
 			proxy = append(proxy, utils.ProxyLocations{WebPath: server.WebPath, EndPoint: server.Path})
 		} else if server.Utype == "proxy_load" {
 			endPoints := SeparateEndPoints(server.Path)
-			ServerEndPoints := make(map[string]int)
+			var ServerEndPoints []utils.LoadServer
 			for _, endPoint := range endPoints {
-				ServerEndPoints[endPoint] = 0
+				url, err := url.Parse(endPoint)
+				if err != nil {
+					utils.HandleAppError(err)
+				}
+				ServerEndPoints = append(ServerEndPoints, utils.LoadServer{URL: url, Alive: true, ReverseProxy: nil})
 			}
 			load = append(load, utils.LoadLocations{WebPath: server.WebPath, EndPoints: ServerEndPoints})
 		}

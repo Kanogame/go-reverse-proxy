@@ -1,5 +1,10 @@
 package utils
 
+import (
+	"net/http/httputil"
+	"net/url"
+)
+
 type Http struct {
 	Port      string
 	LogFolder string
@@ -23,7 +28,13 @@ type ProxyLocations struct {
 
 type LoadLocations struct {
 	WebPath   string
-	EndPoints map[string]int
+	EndPoints []LoadServer
+}
+
+type LoadServer struct {
+	URL          *url.URL
+	Alive        bool
+	ReverseProxy *httputil.ReverseProxy
 }
 
 type Locations struct {

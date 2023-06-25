@@ -16,6 +16,10 @@ type ProxyLocations struct {
 	*utils.ProxyLocations
 }
 
+type LoadLocations struct {
+	*utils.LoadLocations
+}
+
 func (Location *StaticLocations) HandleStatic() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, Location.FilePath)
