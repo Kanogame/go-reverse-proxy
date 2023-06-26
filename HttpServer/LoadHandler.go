@@ -43,12 +43,3 @@ func (Location *LoadLocations) GetNextPeer() *utils.LoadServer {
 	}
 	return nil
 }
-
-func (Server *LoadServer) SetAlive(alive bool) {
-	Server.Alive = alive
-}
-
-func (Server *LoadServer) IsAlive() (alive bool) {
-	alive = Server.Alive
-	return
-}

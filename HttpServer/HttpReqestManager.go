@@ -22,4 +22,8 @@ func locationHandler(locations *utils.Locations) {
 		r := &ProxyLocations{&proxyServer}
 		go http.HandleFunc(proxyServer.WebPath, r.HandleProxy())
 	}
+	for _, loadServer := range *locations.Load {
+		r := &LoadLocations{&loadServer}
+		go http.HandleFunc(loadServer.WebPath, r.HandleLoad())
+	}
 }

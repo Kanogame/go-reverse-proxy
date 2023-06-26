@@ -38,6 +38,15 @@ type LoadServer struct {
 	ReverseProxy *httputil.ReverseProxy
 }
 
+func (Server *LoadServer) SetAlive(alive bool) {
+	Server.Alive = alive
+}
+
+func (Server *LoadServer) IsAlive() (alive bool) {
+	alive = Server.Alive
+	return
+}
+
 type Locations struct {
 	Static *[]StaticLocations
 	Proxy  *[]ProxyLocations
