@@ -20,6 +20,10 @@ type LoadLocations struct {
 	*utils.LoadLocations
 }
 
+type LoadServer struct {
+	*utils.LoadServer
+}
+
 func (Location *StaticLocations) HandleStatic() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, Location.FilePath)

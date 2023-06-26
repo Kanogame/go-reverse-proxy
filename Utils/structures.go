@@ -28,6 +28,7 @@ type ProxyLocations struct {
 
 type LoadLocations struct {
 	WebPath   string
+	current   uint64
 	EndPoints []LoadServer
 }
 
