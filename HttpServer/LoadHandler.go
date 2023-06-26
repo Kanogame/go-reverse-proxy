@@ -26,7 +26,7 @@ func (Location *LoadLocations) StartProxyServers() {
 }
 
 func (Location *LoadLocations) NextIndex() int {
-	return int(atomic.AddUint64(&Location.current, uint64(1)) % uint64(len(Location.EndPoints)))
+	return int(atomic.AddUint64(&Location.Current, uint64(1)) % uint64(len(Location.EndPoints)))
 }
 
 func (Location *LoadLocations) GetNextPeer() *utils.LoadServer {
@@ -36,7 +36,7 @@ func (Location *LoadLocations) GetNextPeer() *utils.LoadServer {
 		idx := i % len(Location.EndPoints)
 		if Location.EndPoints[idx].IsAlive() {
 			if i != next {
-				atomic.StoreUint64(&Location.current, uint64(idx))
+				atomic.StoreUint64(&Location.Current, uint64(idx))
 			}
 			return &Location.EndPoints[idx]
 		}
