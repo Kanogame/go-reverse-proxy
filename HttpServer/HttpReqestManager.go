@@ -24,6 +24,7 @@ func locationHandler(locations *utils.Locations) {
 	}
 	for _, loadServer := range *locations.Load {
 		r := &LoadLocations{&loadServer}
+		r.StartProxyServers()
 		go http.HandleFunc(loadServer.WebPath, r.HandleLoad())
 	}
 }

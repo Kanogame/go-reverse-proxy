@@ -1,18 +1,18 @@
 http {
-	port: "80"; 
+	port: "8080"; 
 	log: "./latest.log"; 
 	location(/) { 
 		type: "static"; 
 		path: "./static"; 
 	} 
 
-	location(/app/) { 
+	location(/proxy/) { 
 		type: "proxy";
-		path: "http://172.21.159.235:12312/";
+		path: "http://127.0.0.1:12312/";
 	} 
     
-	location(/app) { 
+	location(/app/) { 
 	type: "proxy_load"; 
-	path: ["https://0.0.0.0:1/", "https://0.0.0.1:1/", "https://0.0.0.2:1/"];
+	path: ["http://127.0.0.1:12312/", "http://127.0.0.1:12322/"];
 	} 
 }
