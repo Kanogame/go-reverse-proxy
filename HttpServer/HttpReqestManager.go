@@ -6,6 +6,10 @@ import (
 	"net/http"
 )
 
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+
 func StartHttpServer(port string, locations *utils.Locations, config *utils.Http) {
 	locationHandler(locations, config)
 	fmt.Println("Http server started and listening at: ", port)

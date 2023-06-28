@@ -9,6 +9,7 @@ import (
 
 func (Location *LoadLocations) HandleLoad(config *utils.Http) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		enableCors(&w)
 		if config != nil && r.URL.Path != Location.WebPath {
 			http.ServeFile(w, r, config.File404)
 			return
