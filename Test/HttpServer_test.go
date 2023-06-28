@@ -17,7 +17,7 @@ func TestHandleStatic(t *testing.T) {
 			FilePath: "../static/"},
 	}
 
-	ts := httptest.NewServer(http.HandlerFunc(test.HandleStatic()))
+	ts := httptest.NewServer(http.HandlerFunc(test.HandleStatic(nil)))
 	defer ts.Close()
 
 	res, err := http.Get(ts.URL)
@@ -42,7 +42,7 @@ func TestHandleProxy(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodGet, "/", nil)
 	w := httptest.NewRecorder()
-	test.HandleProxy().ServeHTTP(w, req)
+	test.HandleProxy(nil).ServeHTTP(w, req)
 
 	res := w.Result()
 	if res.StatusCode != 200 {

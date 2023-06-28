@@ -8,6 +8,7 @@ import (
 type Http struct {
 	Port      string
 	LogFolder string
+	File404   string
 }
 
 type UndefinedLocation struct {
