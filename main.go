@@ -13,5 +13,5 @@ func main() {
 	fmt.Println("Config read & parsed successfully")
 	static, proxy, load := config.DefineServers(UndefinedServers)
 	var location = utils.Locations{Static: &static, Proxy: &proxy, Load: &load}
-	httpserver.StartHttpServer(configStruct.Port, &location)
+	httpserver.StartHttpServer(configStruct.Port, &location, &configStruct)
 }

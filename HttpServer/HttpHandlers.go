@@ -20,14 +20,22 @@ type LoadLocations struct {
 	*utils.LoadLocations
 }
 
-func (Location *StaticLocations) HandleStatic() http.HandlerFunc {
+func (Location *StaticLocations) HandleStatic(config *utils.Http) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if config != nil && r.URL.Path != Location.WebPath {
+			http.ServeFile(w, r, config.File404)
+			return
+		}
 		http.ServeFile(w, r, Location.FilePath)
 	}
 }
 
-func (Location *ProxyLocations) HandleProxy() http.HandlerFunc {
+func (Location *ProxyLocations) HandleProxy(config *utils.Http) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if config != nil && r.URL.Path != Location.WebPath {
+			http.ServeFile(w, r, config.File404)
+			return
+		}
 		url, _ := url.Parse(Location.EndPoint)
 
 		proxy := httputil.NewSingleHostReverseProxy(url)

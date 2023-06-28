@@ -7,8 +7,12 @@ import (
 	"sync/atomic"
 )
 
-func (Location *LoadLocations) HandleLoad() http.HandlerFunc {
+func (Location *LoadLocations) HandleLoad(config *utils.Http) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
+		if config != nil && r.URL.Path != Location.WebPath {
+			http.ServeFile(w, r, config.File404)
+			return
+		}
 		peer := Location.GetNextPeer()
 		if peer != nil {
 			peer.ReverseProxy.ServeHTTP(w, r)
