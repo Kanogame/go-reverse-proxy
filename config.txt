@@ -1,6 +1,7 @@
 http {
 	port: "8080"; 
 	log: "./latest.log"; 
+	custom_404: "./404/404.html";
 	location(/) { 
 		type: "static"; 
 		path: "./static"; 

@@ -45,6 +45,8 @@ func ParseConfig(config []string) (HttpConfiguration utils.Http, locationArray [
 			HttpConfiguration.Port = ConfigGetValue(ParsedConfig[i])
 		} else if strings.Contains(ParsedConfig[i], "log") {
 			HttpConfiguration.LogFolder = ConfigGetValue(ParsedConfig[i])
+		} else if strings.Contains(ParsedConfig[i], "custom_404") {
+			HttpConfiguration.File404 = ConfigGetValue(ParsedConfig[i])
 		} else if strings.Contains(ParsedConfig[i], "location") {
 			locationArray = append(locationArray, ConfigParseLocation(ParsedConfig, i))
 		}
